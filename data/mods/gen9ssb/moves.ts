@@ -3724,6 +3724,29 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 		type: "Dragon",
 	},
 
+	// Mikurio
+	lucalucabeam: {
+		accuracy: 100,
+		basePower: 67,
+		category: "Special",
+		shortDesc: "Base power is 180 if you're Mikurio's friend; else 67.",
+		desc: "This move's base power is 180 if the trainer is Mikurio's friend; otherwise, its base power is 67.",
+		name: "Luca Luca Beam",
+		gen: 9,
+		pp: 5,
+		priority: 0,
+		flags: { protect: 1 },
+		onPrepareHit(target, source, move) {
+			console.log(source.side.name);
+			if (source.side.name === 'Aurastic') move.basePower = 180;
+			this.add('-anim', source, 'Hyper Beam', target);
+			this.add(`c:|${getName((source.illusion || source).name)}|I`);
+		},
+		secondary: null,
+		target: "normal",
+		type: "Psychic",
+	},
+
 	// Miojo
 	vruuuuuum: {
 		accuracy: 100,
