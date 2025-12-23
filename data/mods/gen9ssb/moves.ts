@@ -3740,7 +3740,7 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 			console.log(source.side.name);
 			if (source.side.name === 'Aurastic') move.basePower = 180;
 			this.add('-anim', source, 'Hyper Beam', target);
-			this.add(`c:|${getName((source.illusion || source).name)}|I`);
+			this.add(`c:|${getName((source.illusion || source).name)}| ${move.basePower}`);
 		},
 		secondary: null,
 		target: "normal",
