@@ -628,7 +628,7 @@ export const ssbSets: SSBSets = {
 	Mikurio: {
 		species: 'Lucario-Mega-Z', ability: 'Mood Swings', item: 'Leftovers', gender: '',
 		moves: ['Close Combat', 'Bullet Punch', 'Earthquake'],
-		signatureMove: 'vruuuuuum',
+		signatureMove: 'Luca Luca Beam!',
 		evs: { hp: 8, atk: 252, spd: 4, spe: 244 }, nature: 'Jolly', teraType: 'Fighting', shiny: 363,
 	},
 	Miojo: {
