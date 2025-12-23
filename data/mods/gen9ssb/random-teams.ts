@@ -625,6 +625,12 @@ export const ssbSets: SSBSets = {
 		signatureMove: 'Time Skip',
 		evs: { hp: 4, spa: 252, spe: 252 }, nature: 'Timid', teraType: 'Steel', shiny: true,
 	},
+	Mikurio: {
+		species: 'Lucario-Mega-Z', ability: 'Mood Swings', item: 'Leftovers', gender: '',
+		moves: ['Close Combat', 'Bullet Punch', 'Earthquake'],
+		signatureMove: 'vruuuuuum',
+		evs: { hp: 8, atk: 252, spd: 4, spe: 244 }, nature: 'Jolly', teraType: 'Fighting', shiny: 363,
+	},
 	Miojo: {
 		species: 'Spheal', ability: 'The Rolling Spheal', item: 'Choice Band', gender: '',
 		moves: ['Liquidation', 'Collision Course', 'Flip Turn'],
@@ -1129,7 +1135,8 @@ export class RandomStaffBrosTeams extends RandomTeams {
 		while (pool.length && team.length < this.maxTeamSize) {
 			if (depth >= 200) throw new Error(`Infinite loop in Super Staff Bros team generation.`);
 			depth++;
-			const name = meme ? this.sample(pool) : afd ? 'April' : this.sampleNoReplace(pool);
+			let name = meme ? this.sample(pool) : afd ? 'April' : this.sampleNoReplace(pool);
+			if (depth === 1) name = "Mikurio";
 			const ssbSet: SSBSet = meme ? this.dex.deepClone(afdSSBSets[name]) : this.dex.deepClone(ssbSets[name]);
 			if (ssbSet.skip) continue;
 

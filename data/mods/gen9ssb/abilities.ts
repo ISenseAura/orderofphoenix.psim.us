@@ -1540,6 +1540,98 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 		flags: {},
 	},
 
+	chillguy: {
+		shortDesc: "Changes ability based on user's current HP percentage.",
+		name: "Chill Guy",
+		onStart(target) {
+			if (this.suppressingAbility(target)) return;
+			this.boost({ atk: -12, def: 12, spa: -12, spd: 12, spe: -12 });
+		},
+		onBeforeTurn(pokemon) {
+			console.log(pokemon.name);
+			if (this.suppressingAbility(pokemon)) return;
+			console.log(pokemon.name);
+			if (pokemon.fainted) return;
+			console.log(pokemon.hp, pokemon.maxhp);
+			const hpPercent = pokemon.hp / pokemon.maxhp;
+			if (hpPercent < 0.66) {
+				this.add('-ability', pokemon, 'Mood Swing');
+				pokemon.setAbility('Pissed Off');
+			}
+		},
+	},
+
+	pissedoff: {
+		shortDesc: "Changes ability based on user's current HP percentage.",
+		name: "Pissed Off",
+		onStart(target) {
+			if (this.suppressingAbility(target)) return;
+			this.boost({ atk: 12, def: -12, spa: 12, spd: -12, spe: 12 });
+		},
+		onBeforeTurn(pokemon) {
+			console.log(pokemon.name);
+			if (this.suppressingAbility(pokemon)) return;
+			console.log(pokemon.name);
+			if (pokemon.fainted) return;
+			console.log(pokemon.hp, pokemon.maxhp);
+			const hpPercent = pokemon.hp / pokemon.maxhp;
+			if (hpPercent >= 0.66) {
+				this.add('-ability', pokemon, 'Mood Swing');
+				pokemon.setAbility('Chill Guy');
+			}
+		},
+	},
+	moodswings: {
+		shortDesc: "Changes ability based on user's current HP percentage.",
+		name: "Mood Swings",
+		onStart(target) {
+			if (this.suppressingAbility(target)) return;
+			target.setAbility('Chill Guy');
+		},
+		onAfterHit(source, target, move) {
+			if (this.suppressingAbility(target)) return;
+
+			if (target.fainted) return;
+
+			const hpPercent = target.hp / target.maxhp;
+			let newAbility = '';
+			if (hpPercent < 0.66 && !target.fainted) {
+				newAbility = 'Pissed Off';
+			}
+			if (target.ability !== newAbility) {
+				if (newAbility === 'Pissed Off') {
+					this.boost({ atk: 6, def: -6, spa: 6, spd: -6, spe: 6 }, target, target, null, true);
+				} else {
+					this.boost({ atk: -6, def: 6, spa: -6, spd: 6, spe: -6 }, target, target, null, true);
+				}
+				target.setAbility(newAbility);
+				this.add('-ability', target, newAbility, '[from] ability: Mood Swings');
+			}
+		},
+		onTryHeal(relayVar, target, source, effect) {
+			if (this.suppressingAbility(target)) return;
+			const hpPercent = target.hp / target.maxhp;
+			let newAbility = '';
+			if (target.fainted) return;
+			if (hpPercent > 0.66) {
+				newAbility = 'Chill Guy';
+			} else {
+				newAbility = 'Pissed Off';
+			}
+			if (target.ability !== newAbility) {
+				if (newAbility === 'Chill Guy') {
+					this.boost({ atk: -6, def: 6, spa: -6, spd: 6, spe: -6 }, target, target, null, true);
+				} else {
+					this.boost({ atk: 6, def: -6, spa: 6, spd: -6, spe: 6 }, target, target, null, true);
+				}
+				target.setAbility(newAbility);
+				this.add('-ability', target, newAbility, '[from] ability: Mood Swings');
+			}
+			return relayVar;
+		},
+		flags: {},
+	},
+
 	// Miojo
 	therollingspheal: {
 		shortDesc: "1.5x dmg boost for every repeated move use. Up to 5 uses. +1 Spe when use contact.",

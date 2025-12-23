@@ -1573,6 +1573,18 @@ export const Conditions: { [id: IDEntry]: ModdedConditionData & { innateName?: s
 			this.add(`c:|${getName('Miojo')}|Em caso de investigação policial, eu declaro que não tenho envolvimento com este grupo e não sei como estou no mesmo, provavelmente fui inserido por terceiros, declaro que estou disposto a colaborar com as investigações e estou disposto a me apresentar a depoimento se necessário`);
 		},
 	},
+	mikurio: {
+		noCopy: true,
+		onStart() {
+			this.add(`c:|${getName('Mikurio')}|Namastey~!'`);
+		},
+		onSwitchOut() {
+			this.add(`c:|${getName('Mikurio')}|Ugh I need a break from all this chaos...`);
+		},
+		onFaint() {
+			this.add(`c:|${getName('Mikurio')}|Ah destiny... why have you forsaken me...`);
+		},
+	},
 	monkey: {
 		noCopy: true,
 		onStart() {

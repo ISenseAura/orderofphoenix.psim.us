@@ -617,6 +617,12 @@ export const Pokedex: import('../../../sim/dex-species').ModdedSpeciesDataTable 
 		abilities: { 0: "Time Dilation" },
 	},
 
+	// Mikurio
+	lucariomegaz: {
+		inherit: true,
+		abilities: { 0: "Mood Swings" },
+	},
+
 	// Miojo
 	spheal: {
 		inherit: true,
